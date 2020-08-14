@@ -1,0 +1,36 @@
+identity:
+  # This will be the default JSON Schema. If `schema_id` is empty when creating an identity using the
+  # Admin API, or a user signs up using a selfservice flow, this schema will be used.
+  #
+  # This is a required configuration field!
+  default_schema_url: file:///configs/user.schema.json
+
+selfservice:
+  flows:
+    logout:
+      after:
+        default_browser_return_url: http://localhost:3000/login
+    settings:
+      ui_url: http://localhost:3000/settings
+    login:
+      ui_url: http://localhost:3000/login
+      request_lifespan: 1h
+    registration:
+      ui_url: http://localhost:3000/register
+  default_browser_return_url: http://127.0.0.1:3000/dashboard
+  strategies:
+    password:
+      enabled: true
+serve:
+  admin:
+    base_url:  http://127.0.0.1:4445
+  public:
+    base_url: http://127.0.0.1:3000/.ory/kratos/public
+
+dsn: postgres://postgres:postgres@database:5432/postgres?sslmode=disable&max_conns=20&max_idle_conns=4
+
+courier:
+  smtp:
+    connection_uri: smtps://test:test@my-smtp-server:1025/
+log:
+  level: debug

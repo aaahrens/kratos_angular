@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  database:
+    container_name: postgresd
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+  kratos_migrate:
+    depends_on:
+      - database
+    image: oryd/kratos:v0.4.6-alpha.1
+    command: ["migrate", "sql", "--read-from-env", "--config", "/configs/kratos.yaml", "--yes"]
+    volumes:
+      - "${PWD}/kratos.yaml:/configs/kratos.yaml"
+  kratos:
+    environment:
+      LOG_LEAK_SENSITIVE_VALUES: 'true'
+    depends_on:
+      - kratos_migrate
+    image: oryd/kratos:v0.4.6-alpha.1
+    command: ["serve", "--config", "/configs/kratos.yaml", "--dev"]
+    volumes:
+      - "${PWD}:/configs/"
+    ports:
+      - 4434:4434
+      - 4433:4433

@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+</mat-toolbar>
+<div class="body">
+<form *ngIf="configs" action="{{this.configs.action}}" method="{{this.configs.method}}">
+  <ng-container *ngFor="let field of this.configs.fields">
+    <ng-template [ngIf]="field.type == 'hidden'" [ngIfElse]="normalInput">
+      <label>
+        <input name="{{field.name}}" type="{{field.type}}" value="{{field.value}}">
+      </label>
+    </ng-template>
+
+    <ng-template #normalInput>
+      <mat-form-field appearance="standard">
+        <mat-label>{{field.name}}</mat-label>
+        <label>
+          <input matInput placeholder="email" name="{{field.name}}">
+        </label>
+      </mat-form-field>
+    </ng-template>
+
+  </ng-container>
+  <div class="buttons">
+    <button mat-button type=submit>
+      Submit
+    </button>
+    <a mat-button type="button" href="/register" >
+      Register an account
+    </a>
+  </div>
+</form>
+</div>
