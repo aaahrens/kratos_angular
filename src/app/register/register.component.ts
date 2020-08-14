@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RequestMethodConfig} from '../../../typings';
+import {RegistrationRequestMethodConfig} from '@oryd/kratos-client';
 
 @Component({
   selector: 'app-register',
@@ -8,22 +8,12 @@ import {RequestMethodConfig} from '../../../typings';
   styleUrls: ['./register.component.sass']
 })
 export class RegisterComponent implements OnInit {
-  configs: RequestMethodConfig;
+  configs: RegistrationRequestMethodConfig;
 
   constructor(private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.configs = this.route.snapshot.data.kratos;
-    if (this.configs == null) {
-      console.log('configs are null');
-    } else {
-      console.dir(this.configs);
-    }
-  }
-
-  async goToLogin(): Promise<void> {
-    // this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    //   this.router.navigate(['/login']));
   }
 }
